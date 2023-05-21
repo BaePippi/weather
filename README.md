@@ -18,7 +18,7 @@ https://baepippi.github.io/weather/
 ## 개발 기간
 
 <p align="justify">
-2023.05 ~ 
+2023.05 ~ 개발중
 </p>
 
 <br>
