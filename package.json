@@ -23,7 +23,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://BaePippi.github.io/weather",
+  "homepage": "https://baepippi.github.io/weather",
   "eslintConfig": {
     "extends": [
       "react-app",
