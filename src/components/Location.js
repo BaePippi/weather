@@ -71,19 +71,19 @@ function Location() {
               hourly.push(res.data.list[i]);
               setHourlyWeather(hourly);
             } else {
-              weekly.push(res.data.list[i]);
-              setWeeklyWeather(weekly);
+                weekly.push(res.data.list[i]);
+                setWeeklyWeather(weekly);
             }
-          }
-          //오늘날짜도 어제 날짜도 아니면 weeklyWeather 변경
-          else if (day !== new Date().getDate() - 1) {
+        }
+        //오늘날짜도 어제 날짜도 아니면 weeklyWeather 변경
+        else if (day !== new Date().getDate() - 1) {
             weekly.push(res.data.list[i]);
             setWeeklyWeather(weekly);
-          }
         }
-      });
-  }, [location]);
-  console.log(weeklyWeather);
+    }
+});
+}, [location]);
+console.log(weeklyWeather[0].weather[0].description);
   const hourly = () => {
     const result = [];
     for (let i = 0; i < hourlyWeather.length; i++) {
@@ -94,6 +94,9 @@ function Location() {
           </p>
           <p key={hourlyWeather[i].dt_txt + "temp"}>
             {Math.round(hourlyWeather[i].main.temp)}°C
+          </p>
+          <p key={hourlyWeather[i].dt_txt + "description"}>
+            {hourlyWeather[i].weather[0].description}
           </p>
         </div>
       );
@@ -111,8 +114,12 @@ function Location() {
               : new Date(weeklyWeather[i].dt_txt).getHours() - 15}
             시
           </p>
+          {/* 주간날씨 날짜별 최고 최저로 수정해야 함 */}
           <p key={weeklyWeather[i].dt_txt + "temp"}>
             {Math.round(weeklyWeather[i].main.temp)}°C
+          </p>
+          <p key={weeklyWeather[i].dt_txt + "description"}>
+            {weeklyWeather[i].weather[0].description}
           </p>
         </div>
       );
@@ -224,10 +231,13 @@ function Location() {
           <p>체감기온: {Math.round(weatherData.main.feels_like)}°C</p>
           <p>습도: {weatherData.main.humidity}%</p>
           <p>최저기온: {Math.round(weatherData.main.temp_min)}°C</p>
+          <p>최고기온: {Math.round(weatherData.main.temp_max)}°C</p>
           <p>
             바람: {windDeg} {weatherData.wind.speed}m/s
           </p>
-          {/* <p>강수량: {weatherData.rain}</p> */}
+          {weeklyWeather[0]&&(
+              <p>강수확률: {weeklyWeather[0].pop}%</p>
+          )}
         </div>
       )}
       {clothes[0] && <p>기온별 옷차림: {clothes}</p>}
