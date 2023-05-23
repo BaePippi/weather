@@ -4,7 +4,7 @@
 
 ## DEMO
 
-https://baepippi.github.io/weather/
+https://baepippi.github.io/weather
 <br>
 
 ## 프로젝트 소개
