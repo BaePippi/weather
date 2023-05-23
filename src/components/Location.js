@@ -146,7 +146,7 @@ function Location() {
     // 날씨 아이콘
     if (weatherData.weather) {
       const iconCode = weatherData.weather[0].icon;
-      setWeatherIcon(`http://openweathermap.org/img/wn/${iconCode}@2x.png`);
+      setWeatherIcon(`https://openweathermap.org/img/wn/${iconCode}@2x.png`);
     }
     // 풍향(다 만들고 공부할 것)
     const WindType = {

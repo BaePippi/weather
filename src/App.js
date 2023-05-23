@@ -6,7 +6,7 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/weather" element={<Location />} />
-        <Route path="/hello" element={<p>Hello</p>} />
+        <Route path="/" element={<Location />} />
       </Routes>
     </Router>
     // <div className="App">
