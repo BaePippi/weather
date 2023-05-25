@@ -83,7 +83,6 @@ function Location() {
     }
 });
 }, [location]);
-console.log(weeklyWeather[0].weather[0].description);
   const hourly = () => {
     const result = [];
     for (let i = 0; i < hourlyWeather.length; i++) {
