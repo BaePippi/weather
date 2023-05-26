@@ -1,0 +1,95 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: "GangwonEdu_OTFBoldA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: "GangwonEdu_OTFBoldA";
+  /* 드래그방지 */
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #222;
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+html {
+  font-size: 16px;
+}
+body {
+  color: #222;
+  font-size: 16px;
+  line-height: 1; /* x1 */
+  letter-spacing: 0;
+  word-break: keep-all; /* 단어를 지켜서 줄내림 */
+  /* overflow-y: hidden;
+  overflow-x: hidden; */
+  opacity: 1;
+  transition-duration: 3s;
+  transition-property: opacity;
+}
+body.fade {
+  opacity: 0;
+}
+.displayNone {
+  display: none !important;
+}
+.wrap {
+  position: relative;
+  display: block;
+  width: 499.18px;
+  height: 1080px;
+}
+.header {
+  position: relative;
+  display: flex;
+}
+.appName {
+  position: relative;
+  display: block;
+  font-size: 48px;
+}
+.header input {
+  border: none;
+  border-bottom: 2px solid #3c486b;
+}
+.header button {
+    width: 40px;
+    height: 40px;
+  margin: 0;
+  /* padding: 0.5rem 1rem; */
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffff00;
+  
+}

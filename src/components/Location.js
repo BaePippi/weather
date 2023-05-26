@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "./Location.module.css";
 
 const API_KEY = "502c6236cb77f41edd4be739de30ed18";
 
@@ -71,18 +72,18 @@ function Location() {
               hourly.push(res.data.list[i]);
               setHourlyWeather(hourly);
             } else {
-                weekly.push(res.data.list[i]);
-                setWeeklyWeather(weekly);
+              weekly.push(res.data.list[i]);
+              setWeeklyWeather(weekly);
             }
-        }
-        //오늘날짜도 어제 날짜도 아니면 weeklyWeather 변경
-        else if (day !== new Date().getDate() - 1) {
+          }
+          //오늘날짜도 어제 날짜도 아니면 weeklyWeather 변경
+          else if (day !== new Date().getDate() - 1) {
             weekly.push(res.data.list[i]);
             setWeeklyWeather(weekly);
+          }
         }
-    }
-});
-}, [location]);
+      });
+  }, [location]);
   const hourly = () => {
     const result = [];
     for (let i = 0; i < hourlyWeather.length; i++) {
@@ -199,7 +200,6 @@ function Location() {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&lang=kr&units=metric`;
     const response = await axios.get(url);
     setWeatherData(response.data);
-    console.log(weatherData);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -207,18 +207,24 @@ function Location() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter location"
-          // value={weatherData.name}
-          onChange={(e) => {
-            setLocation(e.target.value);
-          }}
-        />
-        <button type="submit">Get Weather</button>
-      </form>
+    <div className={styles.wrap}>
+      <div className={styles.header}>
+        <h1 className={styles.appName}>오늘의 날씨</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter location"
+            // value={weatherData.name}
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
+          />
+          <button
+            type="submit"
+            style={{ background: `url(/public/asset/img/Search.png)` }}
+          ></button>
+        </form>
+      </div>
       {weatherData.main && (
         <div>
           <h2>{weatherData.name}날씨</h2>
@@ -234,9 +240,7 @@ function Location() {
           <p>
             바람: {windDeg} {weatherData.wind.speed}m/s
           </p>
-          {weeklyWeather[0]&&(
-              <p>강수확률: {weeklyWeather[0].pop}%</p>
-          )}
+          {weeklyWeather[0] && <p>강수확률: {weeklyWeather[0].pop}%</p>}
         </div>
       )}
       {clothes[0] && <p>기온별 옷차림: {clothes}</p>}
