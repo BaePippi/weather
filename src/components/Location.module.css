@@ -39,7 +39,7 @@ html {
   font-size: 16px;
 }
 body {
-  color: #222;
+  color: #3C486B;
   font-size: 16px;
   line-height: 1; /* x1 */
   letter-spacing: 0;
@@ -61,6 +61,8 @@ body.fade {
   display: block;
   width: 499.18px;
   height: 1080px;
+  border: 2px solid #3C486B;
+  background: repeating-linear-gradient(90deg, rgba(244, 80, 80, 0.1), rgba(244, 80, 80, 0.1) 1px, #ffffff00 0, #ffffff00 10px), repeating-linear-gradient(rgba(244, 80, 80, 0.1), rgba(244, 80, 80, 0.1) 1px, #ffffff00 0, #ffffff00 10px);
 }
 .header {
   position: relative;
@@ -74,22 +76,16 @@ body.fade {
 .header input {
   border: none;
   border-bottom: 2px solid #3c486b;
+  background-color: #ffffff00;
 }
 .header button {
-    width: 40px;
-    height: 40px;
-  margin: 0;
-  /* padding: 0.5rem 1rem; */
-
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  text-align: center;
-  text-decoration: none;
-
+  position: relative;
   display: inline-block;
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 4px;
   background-color: #ffffff00;
-  
+  background: url(/src/asset/Search.png) no-repeat center;
+  background-size: contain;
 }

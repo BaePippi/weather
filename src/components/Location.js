@@ -15,6 +15,7 @@ function Location() {
   const [weatherIcon, setWeatherIcon] = useState("");
   const [windDeg, setWindDeg] = useState("");
 
+  
   // 현재 위치 좌표로 변경
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -220,9 +221,7 @@ function Location() {
             }}
           />
           <button
-            type="submit"
-            style={{ background: `url(/public/asset/img/Search.png)` }}
-          ></button>
+            type="submit"></button>
         </form>
       </div>
       {weatherData.main && (
