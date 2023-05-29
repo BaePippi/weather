@@ -15,7 +15,6 @@ function Location() {
   const [weatherIcon, setWeatherIcon] = useState("");
   const [windDeg, setWindDeg] = useState("");
 
-
   // 현재 위치 좌표로 변경
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -85,7 +84,7 @@ function Location() {
         }
       });
   }, [location]);
-  console.log(weatherData);
+  console.log(weeklyWeather);
 
   const hourly = () => {
     const result = [];
@@ -108,25 +107,52 @@ function Location() {
   };
   const weekly = () => {
     const result = [];
-    for (let i = 0; i < weeklyWeather.length; i++) {
-      result.push(
-        <div key={weeklyWeather[i].dt_txt}>
-          <p key={weeklyWeather[i].dt_txt + "hour"}>
-            {new Date(weeklyWeather[i].dt_txt).getHours() + 9 < 25
-              ? new Date(weeklyWeather[i].dt_txt).getHours() + 9
-              : new Date(weeklyWeather[i].dt_txt).getHours() - 15}
-            시
-          </p>
-          {/* 주간날씨 날짜별 최고 최저로 수정해야 함 */}
-          <p key={weeklyWeather[i].dt_txt + "temp"}>
-            {Math.round(weeklyWeather[i].main.temp)}°C
-          </p>
-          <p key={weeklyWeather[i].dt_txt + "description"}>
-            {weeklyWeather[i].weather[0].description}
-          </p>
-        </div>
-      );
+    const arr = [[], [], [], [], []];
+    for (let z = 0; z < 5; z++) {
+      for (let y = 0; y < 8; y++) {
+        if (weeklyWeather[y + z * 8]) {
+          arr[z].push(weeklyWeather[y + z * 8].main.temp);
+        }
+      }
+      console.log(arr[z]);
+      if (weeklyWeather[z * 8]) {
+        let date = new Date(weeklyWeather[z * 8].dt_txt)
+        date = new Date(date.setDate(date.getDate() + 1));
+        console.log(date)
+        result.push(
+          <div key={weeklyWeather[z * 8].dt_txt}>
+            <p key={"maxTemp" + z}>{date.getDate()}일</p>
+            <p>
+              {Math.round(Math.min(...arr[z])) +
+                "/" +
+                Math.round(Math.max(...arr[z]))}
+              °C
+            </p>
+          </div>
+        );
+      }
     }
+    // for (let i = 0; i < weeklyWeather.length; i++) {
+    //   arr.push(weeklyWeather[i].main.temp);
+    //   result.push(
+    //     <div key={weeklyWeather[i].dt_txt}>
+    //       <p key={weeklyWeather[i].dt_txt + "hour"}>
+    //         {new Date(weeklyWeather[i].dt_txt).getHours() + 9 < 25
+    //           ? new Date(weeklyWeather[i].dt_txt).getHours() + 9
+    //           : new Date(weeklyWeather[i].dt_txt).getHours() - 15}
+    //         시
+    //       </p>
+    //       {/* 주간날씨 날짜별 최고 최저로 수정해야 함 */}
+    //       <p key={weeklyWeather[i].dt_txt + "temp"}>
+    //         {Math.round(weeklyWeather[i].main.temp)}°C
+    //       </p>
+    //       <p key={weeklyWeather[i].dt_txt + "description"}>
+    //         {weeklyWeather[i].weather[0].description}
+    //       </p>
+    //     </div>
+    //   );
+    // }
+    console.log(Math.max(...arr[3]));
     return result;
   };
   useEffect(() => {
@@ -207,9 +233,9 @@ function Location() {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWeatherData(location);
-    setInput("")
+    setInput("");
   };
-  
+
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
@@ -220,7 +246,7 @@ function Location() {
             placeholder="Enter location"
             value={input}
             onChange={(e) => {
-              setLocation(e.target.value)
+              setLocation(e.target.value);
               setInput(e.target.value);
             }}
           />
