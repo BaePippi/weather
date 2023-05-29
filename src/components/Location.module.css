@@ -78,6 +78,9 @@ body.fade {
   border-bottom: 2px solid #3c486b;
   background-color: #ffffff00;
 }
+.header input:focus{
+   outline: none;
+}
 .header button {
   position: relative;
   display: inline-block;

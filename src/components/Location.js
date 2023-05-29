@@ -8,14 +8,14 @@ function Location() {
   const [location, setLocation] = useState("");
 
   const [weatherData, setWeatherData] = useState({});
-  const [forecast, setForecast] = useState({});
+  const [input, setInput] = useState("");
   const [weeklyWeather, setWeeklyWeather] = useState({});
   const [hourlyWeather, setHourlyWeather] = useState({});
   const [clothes, setClothes] = useState({});
   const [weatherIcon, setWeatherIcon] = useState("");
   const [windDeg, setWindDeg] = useState("");
 
-  
+
   // 현재 위치 좌표로 변경
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -85,6 +85,8 @@ function Location() {
         }
       });
   }, [location]);
+  console.log(weatherData);
+
   const hourly = () => {
     const result = [];
     for (let i = 0; i < hourlyWeather.length; i++) {
@@ -205,8 +207,9 @@ function Location() {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWeatherData(location);
+    setInput("")
   };
-
+  
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
@@ -215,18 +218,18 @@ function Location() {
           <input
             type="text"
             placeholder="Enter location"
-            // value={weatherData.name}
+            value={input}
             onChange={(e) => {
-              setLocation(e.target.value);
+              setLocation(e.target.value)
+              setInput(e.target.value);
             }}
           />
-          <button
-            type="submit"></button>
+          <button type="submit"></button>
         </form>
       </div>
       {weatherData.main && (
         <div>
-          <h2>{weatherData.name}날씨</h2>
+          <h2>{weatherData.name.toUpperCase()}</h2>
           <p>
             {weatherData.weather[0].description}
             <img src={weatherIcon}></img>
