@@ -116,9 +116,9 @@ function Location() {
       }
       console.log(arr[z]);
       if (weeklyWeather[z * 8]) {
-        let date = new Date(weeklyWeather[z * 8].dt_txt)
+        let date = new Date(weeklyWeather[z * 8].dt_txt);
         date = new Date(date.setDate(date.getDate() + 1));
-        console.log(date)
+        console.log(date);
         result.push(
           <div key={weeklyWeather[z * 8].dt_txt}>
             <p key={"maxTemp" + z}>{date.getDate()}일</p>
@@ -238,45 +238,71 @@ function Location() {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.header}>
-        <h1 className={styles.appName}>오늘의 날씨</h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Enter location"
-            value={input}
-            onChange={(e) => {
-              setLocation(e.target.value);
-              setInput(e.target.value);
-            }}
-          />
-          <button type="submit"></button>
-        </form>
-      </div>
-      {weatherData.main && (
-        <div>
-          <h2>{weatherData.name.toUpperCase()}</h2>
-          <p>
-            {weatherData.weather[0].description}
-            <img src={weatherIcon}></img>
-          </p>
-          <p>기온: {Math.round(weatherData.main.temp)}°C</p>
-          <p>체감기온: {Math.round(weatherData.main.feels_like)}°C</p>
-          <p>습도: {weatherData.main.humidity}%</p>
-          <p>최저기온: {Math.round(weatherData.main.temp_min)}°C</p>
-          <p>최고기온: {Math.round(weatherData.main.temp_max)}°C</p>
-          <p>
-            바람: {windDeg} {weatherData.wind.speed}m/s
-          </p>
-          {weeklyWeather[0] && <p>강수확률: {weeklyWeather[0].pop}%</p>}
-        </div>
-      )}
-      {clothes[0] && <p>기온별 옷차림: {clothes}</p>}
-      <div>
-        <p>시간별기온</p>
-        {hourly()}
-        <p>주간날씨</p>
-        {weekly()}
+      <div className={styles.inner}>
+        <header className={styles.header}>
+          <h1 className={styles.appName}>오늘의 날씨</h1>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Enter location"
+              value={input}
+              onChange={(e) => {
+                setLocation(e.target.value);
+                setInput(e.target.value);
+              }}
+            />
+            <button type="submit"></button>
+          </form>
+        </header>
+        {weatherData.main && (
+          <section className={styles.currentBox}>
+            <div className={styles.city}>
+              <h2>{weatherData.name.toUpperCase()}</h2>
+              {/*도시*/}
+            </div>
+            <div className={`${styles.currentInfo} ${styles.box}`}>
+              <div>
+                {/* {weatherData.weather[0].description} */}
+                <p>{Math.round(weatherData.main.temp)}°C</p>
+                <img src={weatherIcon}></img>
+                {/*아이콘*/}
+              </div>
+              {/*현재기온*/}
+              <div className={styles.gridBox}>
+                <p>최저기온: {Math.round(weatherData.main.temp_min)}°C</p>
+                <p>최고기온: {Math.round(weatherData.main.temp_max)}°C</p>
+                <p>체감기온: {Math.round(weatherData.main.feels_like)}°C</p>
+                <p>
+                  바람: {windDeg} {weatherData.wind.speed}m/s
+                </p>
+                <p>습도: {weatherData.main.humidity}%</p>
+                {weeklyWeather[0] && <p>강수확률: {weeklyWeather[0].pop}%</p>}
+              </div>
+            </div>
+          </section>
+        )}
+        {clothes[0] && (
+          <section className={styles.recommendedBox}>
+            <div className={styles.cate}>
+              <p>추천 옷차림</p>
+            </div>
+            <div className={styles.box}>
+              <p>{clothes}</p>
+            </div>
+          </section>
+        )}
+        <section className={styles.hourlyBox}>
+          <div className={styles.cate}>
+            <p>시간별기온</p>
+          </div>
+          <div className={styles.box}>{hourly()}</div>
+        </section>
+        <section className={styles.weeklyBox}>
+          <div className={styles.cate}>
+            <p>주간날씨</p>
+          </div>
+          <div className={styles.box}>{weekly()}</div>
+        </section>
       </div>
     </div>
   );
