@@ -39,7 +39,7 @@ html {
   font-size: 16px;
 }
 body {
-  color: #3C486B;
+  color: #3c486b;
   font-size: 16px;
   line-height: 1; /* x1 */
   letter-spacing: 0;
@@ -61,47 +61,83 @@ body.fade {
   display: block;
   width: 499.18px;
   height: 1080px;
-  border: 2px solid #3C486B;
-  background: repeating-linear-gradient(90deg, rgba(244, 80, 80, 0.1), rgba(244, 80, 80, 0.1) 1px, #ffffff00 0, #ffffff00 10px), repeating-linear-gradient(rgba(244, 80, 80, 0.1), rgba(244, 80, 80, 0.1) 1px, #ffffff00 0, #ffffff00 10px);
+  margin: 0 auto;
+  border: 2px solid #3c486b;
+  background: repeating-linear-gradient(
+      90deg,
+      rgba(244, 80, 80, 0.1),
+      rgba(244, 80, 80, 0.1) 1px,
+      #ffffff00 0,
+      #ffffff00 10px
+    ),
+    repeating-linear-gradient(
+      rgba(244, 80, 80, 0.1),
+      rgba(244, 80, 80, 0.1) 1px,
+      #ffffff00 0,
+      #ffffff00 10px
+    );
 }
 .inner {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    margin: 30px auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 30px auto;
 }
 .box {
-    position: relative;
-    display: block;
-    width: 420px ;
-    border: 2px solid #3C486B;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 420px;
+  border: 2px solid #3c486b;
+}
+.center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .header {
   position: relative;
   display: flex;
+  justify-content: space-between;
+  width: 420px;
 }
 .appName {
   position: relative;
   display: block;
-  font-size: 48px;
+  font-size: 40px;
 }
 /* header */
+.header form {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 200px;
+  height: 38px;
+}
 .header input {
+  position: relative;
+  display: block;
+  width: 150px;
   border: none;
   border-bottom: 2px solid #3c486b;
   background-color: #ffffff00;
+  font-size: 25px;
+  color: #3c486b;
 }
-.header input:focus{
-    outline: none;
+.header input:focus {
+  outline: none;
 }
 .header button {
   position: relative;
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border: none;
   border-radius: 4px;
   background-color: #ffffff00;
@@ -110,11 +146,45 @@ body.fade {
 }
 /* header 끝 */
 /* currentBox */
-.currentInfo{
-    border: 2px solid #3C486B;
+.currentBox {
 }
+.currentInfo {
+}
+.city {
+  font-size: 24px;
+}
+.tempBox {
+  position: relative;
+  display: flex;
+  background-size: cover !important;
+  text-shadow: 2px 2px 10px #ffffff;
+}
+.currentTemp {
+  position: relative;
+  display: block;
+  font-size: 100px;
+  z-index: 1;
+}
+.unit {
+  position: relative;
+  display: block;
+  font-size: 50px;
+  padding: 15px 0;
+  z-index: 1;
+}
+.gridBox {
+  position: relative;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-auto-flow: column;
+  justify-content: space-between;
+  width: 60%;
+  height: 80px;
+}
+
 /* currentBox 끝 */
 /* recommendedBox */
+
 /* recommendedBox 끝 */
 /* hourlyBox */
 /* hourlyBox 끝 */

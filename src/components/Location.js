@@ -255,17 +255,21 @@ function Location() {
           </form>
         </header>
         {weatherData.main && (
-          <section className={styles.currentBox}>
+          <section className={`${styles.currentBox} ${styles.center}`}>
             <div className={styles.city}>
               <h2>{weatherData.name.toUpperCase()}</h2>
               {/*도시*/}
             </div>
             <div className={`${styles.currentInfo} ${styles.box}`}>
-              <div>
-                {/* {weatherData.weather[0].description} */}
-                <p>{Math.round(weatherData.main.temp)}°C</p>
-                <img src={weatherIcon}></img>
-                {/*아이콘*/}
+              {/*아이콘*/}
+              <div
+                className={styles.tempBox}
+                style={{ background: `url('${weatherIcon}') no-repeat center` }}
+              >
+                <p className={styles.currentTemp}>
+                  {Math.round(weatherData.main.temp)}
+                </p>
+                <span className={styles.unit}>°C</span>
               </div>
               {/*현재기온*/}
               <div className={styles.gridBox}>
@@ -282,7 +286,7 @@ function Location() {
           </section>
         )}
         {clothes[0] && (
-          <section className={styles.recommendedBox}>
+          <section className={`${styles.recommendedBox} ${styles.center}`}>
             <div className={styles.cate}>
               <p>추천 옷차림</p>
             </div>
@@ -291,13 +295,13 @@ function Location() {
             </div>
           </section>
         )}
-        <section className={styles.hourlyBox}>
+        <section className={`${styles.hourlyBox} ${styles.center}`}>
           <div className={styles.cate}>
             <p>시간별기온</p>
           </div>
           <div className={styles.box}>{hourly()}</div>
         </section>
-        <section className={styles.weeklyBox}>
+        <section className={`${styles.weeklyBox} ${styles.center}`}>
           <div className={styles.cate}>
             <p>주간날씨</p>
           </div>
