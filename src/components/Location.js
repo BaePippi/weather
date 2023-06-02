@@ -183,21 +183,22 @@ const iconCode = hourlyWeather[i].weather[0].icon;
     // >>weatherData 바뀌면 실행
     // 기온별 옷차림 추천 분기문
     if (weatherData.main) {
-      if (weatherData.main.temp >= 28) {
+        console.log(weatherData.main.temp);
+      if (Math.round(weatherData.main.temp) > 27) {
         setClothes("민소매, 반팔, 반바지, 짧은 치마, 린넨 옷");
-      } else if (weatherData.main.temp <= 27 && weatherData.main.temp >= 23) {
+      } else if (Math.round(weatherData.main.temp) > 22) {
         setClothes("반팔, 얇은 셔츠, 반바지, 면바지");
-      } else if (weatherData.main.temp <= 22 && weatherData.main.temp >= 20) {
+      } else if (Math.round(weatherData.main.temp) > 19) {
         setClothes("블라우스, 긴팔 티, 면바지, 슬랙스, 얇은 가디건, 청바지");
-      } else if (weatherData.main.temp <= 19 && weatherData.main.temp >= 17) {
+      } else if (Math.round(weatherData.main.temp) > 16) {
         setClothes("얇은 가디건, 니트, 맨투맨, 후드, 긴 바지");
-      } else if (weatherData.main.temp <= 16 && weatherData.main.temp >= 12) {
+      } else if (Math.round(weatherData.main.temp) > 11) {
         setClothes("자켓, 가디건, 청자켓, 니트, 스타킹, 청바지, 면바지");
-      } else if (weatherData.main.temp <= 11 && weatherData.main.temp >= 9) {
+      } else if (Math.round(weatherData.main.temp) > 8) {
         setClothes(
           "트렌치 코트, 야상점퍼, 자켓, 니트, 스타킹, 청바지, 기모바지"
         );
-      } else if (weatherData.main.temp <= 8 && weatherData.main.temp >= 5) {
+      } else if (Math.round(weatherData.main.temp) > 4) {
         setClothes("울코트, 히트텍, 가죽옷, 기모, 니트, 레깅스");
       } else {
         setClothes("패딩, 두꺼운 코트, 누빔 옷, 기모, 목도리");
