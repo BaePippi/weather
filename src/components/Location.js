@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+// import "swiper/css/pagination";
+
+// import required modules
+import { Pagination } from "swiper";
+
 import styles from "./Location.module.css";
 
 const API_KEY = "502c6236cb77f41edd4be739de30ed18";
@@ -88,23 +97,34 @@ function Location() {
 
   const hourly = () => {
     const result = [];
+    
     for (let i = 0; i < hourlyWeather.length; i++) {
+        console.log(hourlyWeather);
+const iconCode = hourlyWeather[i].weather[0].icon;
       result.push(
-        <div key={hourlyWeather[i].dt_txt}>
+        <SwiperSlide key={hourlyWeather[i].dt_txt}>
           <p key={hourlyWeather[i].dt_txt + "hour"}>
             {new Date(hourlyWeather[i].dt_txt).getHours() + 9}시
           </p>
           <p key={hourlyWeather[i].dt_txt + "temp"}>
-            {Math.round(hourlyWeather[i].main.temp)}°C
+            {Math.round(hourlyWeather[i].main.temp)}
+            <span className={styles.unit}>°C</span>
           </p>
-          <p key={hourlyWeather[i].dt_txt + "description"}>
+          {/* <p key={hourlyWeather[i].dt_txt + "description"}>
             {hourlyWeather[i].weather[0].description}
-          </p>
-        </div>
+          </p> */}
+          <div
+            className={styles.hourlyIcon}
+            style={{
+              background: `url('https://openweathermap.org/img/wn/${iconCode}@2x.png') no-repeat center`,
+            }}
+          ></div>
+        </SwiperSlide>
       );
     }
     return result;
   };
+  
   const weekly = () => {
     const result = [];
     const arr = [[], [], [], [], []];
@@ -119,14 +139,18 @@ function Location() {
         let date = new Date(weeklyWeather[z * 8].dt_txt);
         date = new Date(date.setDate(date.getDate() + 1));
         console.log(date);
+        
         result.push(
-          <div key={weeklyWeather[z * 8].dt_txt}>
+          <div
+            className={styles.weeklyTempItem}
+            key={weeklyWeather[z * 8].dt_txt}
+          >
             <p key={"maxTemp" + z}>{date.getDate()}일</p>
             <p>
               {Math.round(Math.min(...arr[z])) +
                 "/" +
                 Math.round(Math.max(...arr[z]))}
-              °C
+              <span className={styles.unit}>°C</span>
             </p>
           </div>
         );
@@ -269,18 +293,36 @@ function Location() {
                 <p className={styles.currentTemp}>
                   {Math.round(weatherData.main.temp)}
                 </p>
-                <span className={styles.unit}>°C</span>
+                <span className={styles.currentTempUnit}>°C</span>
               </div>
               {/*현재기온*/}
               <div className={styles.gridBox}>
-                <p>최저기온: {Math.round(weatherData.main.temp_min)}°C</p>
-                <p>최고기온: {Math.round(weatherData.main.temp_max)}°C</p>
-                <p>체감기온: {Math.round(weatherData.main.feels_like)}°C</p>
                 <p>
-                  바람: {windDeg} {weatherData.wind.speed}m/s
+                  최저기온: {Math.round(weatherData.main.temp_min)}
+                  <span className={styles.unit}>°C</span>
                 </p>
-                <p>습도: {weatherData.main.humidity}%</p>
-                {weeklyWeather[0] && <p>강수확률: {weeklyWeather[0].pop}%</p>}
+                <p>
+                  최고기온: {Math.round(weatherData.main.temp_max)}
+                  <span className={styles.unit}>°C</span>
+                </p>
+                <p>
+                  체감기온: {Math.round(weatherData.main.feels_like)}
+                  <span className={styles.unit}>°C</span>
+                </p>
+                <p>
+                  바람: {windDeg} {weatherData.wind.speed}
+                  <span className={styles.unit}>m/s</span>
+                </p>
+                <p>
+                  습도: {weatherData.main.humidity}
+                  <span className={styles.unit}>%</span>
+                </p>
+                {weeklyWeather[0] && (
+                  <p>
+                    강수확률: {weeklyWeather[0].pop}
+                    <span className={styles.unit}>%</span>
+                  </p>
+                )}
               </div>
             </div>
           </section>
@@ -290,7 +332,7 @@ function Location() {
             <div className={styles.cate}>
               <p>추천 옷차림</p>
             </div>
-            <div className={styles.box}>
+            <div className={`${styles.box} ${styles.clothesBox}`}>
               <p>{clothes}</p>
             </div>
           </section>
@@ -299,13 +341,33 @@ function Location() {
           <div className={styles.cate}>
             <p>시간별기온</p>
           </div>
-          <div className={styles.box}>{hourly()}</div>
+          <div className={`${styles.box} ${styles.hourlyTemp}`}>
+            <div
+            //  className={styles.flexBox}
+            className={styles.aa}
+             >
+              <Swiper
+                slidesPerView={4}
+                // spaceBetween={30}
+                pagination={{
+                  clickable: true,
+                }}
+                // modules={[Pagination]}
+                className="mySwiper"
+              >
+                
+              {hourly()}
+              </Swiper>
+            </div>
+          </div>
         </section>
         <section className={`${styles.weeklyBox} ${styles.center}`}>
           <div className={styles.cate}>
             <p>주간날씨</p>
           </div>
-          <div className={styles.box}>{weekly()}</div>
+          <div className={`${styles.box} ${styles.weeklyTemp}`}>
+            <div className={styles.flexBox}>{weekly()}</div>
+          </div>
         </section>
       </div>
     </div>
