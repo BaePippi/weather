@@ -23,6 +23,7 @@ function Location() {
   const [clothes, setClothes] = useState({});
   const [weatherIcon, setWeatherIcon] = useState("");
   const [windDeg, setWindDeg] = useState("");
+  const [rain, setRain] = useState(0);
 
   // 현재 위치 좌표로 변경
   useEffect(() => {
@@ -73,7 +74,6 @@ function Location() {
         for (let i = 0; i < res.data.list.length; i++) {
           let day = new Date(res.data.list[i].dt_txt).getDate();
           let time = new Date(res.data.list[i].dt_txt).getHours();
-
           // 오늘날짜와 일치하면 hourlyWeather 변경
           //time에 9를 더한 이유 : utc기준 시간이라 우리나라가 9시간 더 빠르다.
           if (day === new Date().getDate()) {
@@ -93,14 +93,13 @@ function Location() {
         }
       });
   }, [location]);
-  console.log(weeklyWeather);
+  console.log(hourlyWeather);
 
   const hourly = () => {
     const result = [];
-    
+
     for (let i = 0; i < hourlyWeather.length; i++) {
-        console.log(hourlyWeather);
-const iconCode = hourlyWeather[i].weather[0].icon;
+      const iconCode = hourlyWeather[i].weather[0].icon;
       result.push(
         <SwiperSlide key={hourlyWeather[i].dt_txt}>
           <p key={hourlyWeather[i].dt_txt + "hour"}>
@@ -124,7 +123,7 @@ const iconCode = hourlyWeather[i].weather[0].icon;
     }
     return result;
   };
-  
+
   const weekly = () => {
     const result = [];
     const arr = [[], [], [], [], []];
@@ -134,12 +133,10 @@ const iconCode = hourlyWeather[i].weather[0].icon;
           arr[z].push(weeklyWeather[y + z * 8].main.temp);
         }
       }
-      console.log(arr[z]);
       if (weeklyWeather[z * 8]) {
         let date = new Date(weeklyWeather[z * 8].dt_txt);
         date = new Date(date.setDate(date.getDate() + 1));
-        console.log(date);
-        
+
         result.push(
           <div
             className={styles.weeklyTempItem}
@@ -176,14 +173,12 @@ const iconCode = hourlyWeather[i].weather[0].icon;
     //     </div>
     //   );
     // }
-    console.log(Math.max(...arr[3]));
     return result;
   };
   useEffect(() => {
     // >>weatherData 바뀌면 실행
     // 기온별 옷차림 추천 분기문
     if (weatherData.main) {
-        console.log(weatherData.main.temp);
       if (Math.round(weatherData.main.temp) > 27) {
         setClothes("민소매, 반팔, 반바지, 짧은 치마, 린넨 옷");
       } else if (Math.round(weatherData.main.temp) > 22) {
@@ -248,6 +243,12 @@ const iconCode = hourlyWeather[i].weather[0].icon;
       const wd = getWindDirection(weatherData.wind.deg);
       setWindDeg(wd);
     }
+    {/* 비가 안오면 weatherData.rain이 없어서 오류남. 삼항연산자로 해결 */}
+    weatherData.rain
+      ? setRain(weatherData.rain["1h"])
+      : weatherData.snow
+      ? setRain(weatherData.snow["1h"])
+      : setRain(0);
   }, [weatherData]);
   // 검색하면 실행
   const fetchWeatherData = async (location) => {
@@ -318,12 +319,10 @@ const iconCode = hourlyWeather[i].weather[0].icon;
                   습도: {weatherData.main.humidity}
                   <span className={styles.unit}>%</span>
                 </p>
-                {weeklyWeather[0] && (
-                  <p>
-                    강수확률: {weeklyWeather[0].pop}
-                    <span className={styles.unit}>%</span>
-                  </p>
-                )}
+                <p>
+                  시간당 강수량: {rain}
+                  <span className={styles.unit}>mm/h</span>
+                </p>
               </div>
             </div>
           </section>
@@ -344,9 +343,9 @@ const iconCode = hourlyWeather[i].weather[0].icon;
           </div>
           <div className={`${styles.box} ${styles.hourlyTemp}`}>
             <div
-            //  className={styles.flexBox}
-            className={styles.aa}
-             >
+              //  className={styles.flexBox}
+              className={styles.aa}
+            >
               <Swiper
                 slidesPerView={4}
                 // spaceBetween={30}
@@ -356,8 +355,7 @@ const iconCode = hourlyWeather[i].weather[0].icon;
                 // modules={[Pagination]}
                 className="mySwiper"
               >
-                
-              {hourly()}
+                {hourly()}
               </Swiper>
             </div>
           </div>
