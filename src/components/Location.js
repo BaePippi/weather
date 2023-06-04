@@ -118,6 +118,10 @@ function Location() {
               background: `url('https://openweathermap.org/img/wn/${iconCode}@2x.png') no-repeat center`,
             }}
           ></div>
+          <div className={styles.popBox}>
+            <img className={styles.water} src='images/water.png'></img>
+            <div className={styles.rain}></div>
+          </div>
         </SwiperSlide>
       );
     }
@@ -243,7 +247,9 @@ function Location() {
       const wd = getWindDirection(weatherData.wind.deg);
       setWindDeg(wd);
     }
-    {/* 비가 안오면 weatherData.rain이 없어서 오류남. 삼항연산자로 해결 */}
+    {
+      /* 비가 안오면 weatherData.rain이 없어서 오류남. 삼항연산자로 해결 */
+    }
     weatherData.rain
       ? setRain(weatherData.rain["1h"])
       : weatherData.snow
@@ -352,7 +358,6 @@ function Location() {
                 pagination={{
                   clickable: true,
                 }}
-                // modules={[Pagination]}
                 className="mySwiper"
               >
                 {hourly()}

@@ -256,3 +256,12 @@ body.fade {
     height: 50px;
     background-size: contain !important;
 }
+.popBox {
+
+}
+.water {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 40px;
+}
