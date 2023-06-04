@@ -201,10 +201,10 @@ body.fade {
 .recommendedBox {
 }
 .cate p {
-    font-size: 20px;
+  font-size: 20px;
 }
 .clothesBox p {
-    font-size: 18px;
+  font-size: 18px;
 }
 /* recommendedBox 끝 */
 /* hourlyBox */
@@ -215,7 +215,7 @@ body.fade {
 .flexBox {
   position: relative;
   display: flex;
-  width: 80%;
+  width: 90%;
   justify-content: space-between;
 }
 .weeklyTempItem {
@@ -225,43 +225,49 @@ body.fade {
   align-items: center;
 }
 .weeklyTempItem p {
- font-size: 18px;
+  font-size: 18px;
 }
 /* weeklyBox 끝 */
-.aa{
-    width: 80%;
+.aa {
+  position: relative;
+  display: block;
+  width: 90%;
+  font-size: 18px;
+  text-align: center;
 }
 .swiper {
   width: 100%;
   height: 100%;
 }
-.swiper-slide {
-  text-align: center !important;
-  font-size: 18px !important;
-  background: #fff;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
 
-}
 
-/* .swiper-slide img {
+.swiper-slide img {
   display: block;
-  width: 100%;
-  height: 100%;
+  
   object-fit: cover;
-} */
+}
 .hourlyIcon {
-    width: 50px;
-    height: 50px;
-    background-size: contain !important;
+  width: 50px;
+  height: 50px;
+  background-size: contain !important;
+  object-fit: cover;
 }
 .popBox {
-
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 .water {
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 15px;
+  object-fit: cover;
+}
+.dateBox{
     position: relative;
     display: block;
-    width: 30px;
-    height: 40px;
+    width: 100%;
+    height: 20px;
 }

@@ -76,19 +76,33 @@ function Location() {
           let time = new Date(res.data.list[i].dt_txt).getHours();
           // 오늘날짜와 일치하면 hourlyWeather 변경
           //time에 9를 더한 이유 : utc기준 시간이라 우리나라가 9시간 더 빠르다.
+
+          //   if (day === new Date().getDate()) {
+          //     if (time + 9 < 25) {
+          //       hourly.push(res.data.list[i]);
+          //       setHourlyWeather(hourly);
+          //     } else {
+          //       weekly.push(res.data.list[i]);
+          //       setWeeklyWeather(weekly);
+          //     }
+          //   }
+          //   //오늘날짜도 어제 날짜도 아니면 weeklyWeather 변경
+          //   else if (day !== new Date().getDate() - 1) {
+          //     weekly.push(res.data.list[i]);
+          //     setWeeklyWeather(weekly);
+          //   }
+          hourly.push(res.data.list[i]);
+          setHourlyWeather(hourly);
+
+          if (day !== new Date().getDate() - 1) {
+            weekly.push(res.data.list[i]);
+            setWeeklyWeather(weekly);
+          }
           if (day === new Date().getDate()) {
-            if (time + 9 < 25) {
-              hourly.push(res.data.list[i]);
-              setHourlyWeather(hourly);
-            } else {
+            if (time + 9 > 24) {
               weekly.push(res.data.list[i]);
               setWeeklyWeather(weekly);
             }
-          }
-          //오늘날짜도 어제 날짜도 아니면 weeklyWeather 변경
-          else if (day !== new Date().getDate() - 1) {
-            weekly.push(res.data.list[i]);
-            setWeeklyWeather(weekly);
           }
         }
       });
@@ -102,8 +116,28 @@ function Location() {
       const iconCode = hourlyWeather[i].weather[0].icon;
       result.push(
         <SwiperSlide key={hourlyWeather[i].dt_txt}>
+          {/* 원래 이렇게 하려고 했으나 날짜 넘어가는 부분에서 시차 9시간때문에 6시 위에 날짜가 표시됨. */}
+          {/* {(hourlyWeather[i + 1] &&
+            new Date(hourlyWeather[i + 1].dt_txt).getDate() !==
+              new Date(hourlyWeather[i].dt_txt).getDate()) && (
+            <p>{new Date(hourlyWeather[i].dt_txt).getDate()}일</p>
+          )} */}
+          {/* 젤 첨에는 오늘 표시하고 날짜바뀌고 3시에만 날짜 표시함 */}
+          <div className={styles.dateBox}>
+            {i === 0 ? (
+              <p>오늘</p>
+            ) : (
+              new Date(hourlyWeather[i].dt_txt).getHours() + 9 > 24 &&
+              new Date(hourlyWeather[i].dt_txt).getHours() - 15 === 3 && (
+                <p>{new Date(hourlyWeather[i].dt_txt).getDate()}일</p>
+              )
+            )}
+          </div>
           <p key={hourlyWeather[i].dt_txt + "hour"}>
-            {new Date(hourlyWeather[i].dt_txt).getHours() + 9}시
+            {new Date(hourlyWeather[i].dt_txt).getHours() + 9 < 25
+              ? new Date(hourlyWeather[i].dt_txt).getHours() + 9
+              : new Date(hourlyWeather[i].dt_txt).getHours() - 15}
+            시
           </p>
           <p key={hourlyWeather[i].dt_txt + "temp"}>
             {Math.round(hourlyWeather[i].main.temp)}
@@ -112,15 +146,22 @@ function Location() {
           {/* <p key={hourlyWeather[i].dt_txt + "description"}>
             {hourlyWeather[i].weather[0].description}
           </p> */}
-          <div
+          <img
             className={styles.hourlyIcon}
-            style={{
-              background: `url('https://openweathermap.org/img/wn/${iconCode}@2x.png') no-repeat center`,
-            }}
-          ></div>
+            src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
+            alt={hourlyWeather[i].weather[0].description}
+          />
           <div className={styles.popBox}>
-            <img className={styles.water} src='images/water.png'></img>
-            <div className={styles.rain}></div>
+            {/* <img className={styles.water} src="images/water.png" alt="water" /> */}
+            <img
+              className={styles.water}
+              src="http://localhost:3000/weather/images/water.png"
+              alt="water"
+            />
+            <div className={styles.rain}>
+              {hourlyWeather[i].pop}
+              <span className={styles.unit}>%</span>
+            </div>
           </div>
         </SwiperSlide>
       );
@@ -306,15 +347,15 @@ function Location() {
               {/*현재기온*/}
               <div className={styles.gridBox}>
                 <p>
-                  최저기온: {Math.round(weatherData.main.temp_min)}
+                  최저: {Math.round(weatherData.main.temp_min)}
                   <span className={styles.unit}>°C</span>
                 </p>
                 <p>
-                  최고기온: {Math.round(weatherData.main.temp_max)}
+                  최고: {Math.round(weatherData.main.temp_max)}
                   <span className={styles.unit}>°C</span>
                 </p>
                 <p>
-                  체감기온: {Math.round(weatherData.main.feels_like)}
+                  체감: {Math.round(weatherData.main.feels_like)}
                   <span className={styles.unit}>°C</span>
                 </p>
                 <p>
@@ -326,7 +367,7 @@ function Location() {
                   <span className={styles.unit}>%</span>
                 </p>
                 <p>
-                  시간당 강수량: {rain}
+                  강수량: {rain}
                   <span className={styles.unit}>mm/h</span>
                 </p>
               </div>
