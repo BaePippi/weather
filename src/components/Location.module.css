@@ -60,7 +60,7 @@ body.fade {
   position: relative;
   display: block;
   width: 499.18px;
-  height: 1080px;
+  height: 100vh;
   margin: 0 auto;
   border: 2px solid #3c486b;
   background: repeating-linear-gradient(
@@ -270,4 +270,5 @@ body.fade {
     display: block;
     width: 100%;
     height: 20px;
+    text-decoration: overline;
 }

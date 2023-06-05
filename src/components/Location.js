@@ -139,22 +139,22 @@ function Location() {
               : new Date(hourlyWeather[i].dt_txt).getHours() - 15}
             시
           </p>
-          <p key={hourlyWeather[i].dt_txt + "temp"}>
-            {Math.round(hourlyWeather[i].main.temp)}
-            <span className={styles.unit}>°C</span>
-          </p>
           <img
             className={styles.hourlyIcon}
             src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
             alt={hourlyWeather[i].weather[0].description}
           />
+          <p key={hourlyWeather[i].dt_txt + "temp"}>
+            {Math.round(hourlyWeather[i].main.temp)}
+            <span className={styles.unit}>°C</span>
+          </p>
           <div className={styles.popBox}>
-            <img className={styles.water} src="images/water.png" alt="water" />
-            {/* <img
+            {/* <img className={styles.water} src="images/water.png" alt="water" /> */}
+            <img
               className={styles.water}
               src="http://localhost:3000/weather/images/water.png"
               alt="water"
-            /> */}
+            />
             <div className={styles.rain}>
               {hourlyWeather[i].pop*100}
               <span className={styles.unit}>%</span>
