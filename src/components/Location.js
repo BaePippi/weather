@@ -7,7 +7,6 @@ import "swiper/css";
 // import "swiper/css/pagination";
 
 // import required modules
-import { Pagination } from "swiper";
 
 import styles from "./Location.module.css";
 
@@ -156,7 +155,7 @@ function Location() {
               alt="water"
             />
             <div className={styles.rain}>
-              {hourlyWeather[i].pop*100}
+              {hourlyWeather[i].pop * 100}
               <span className={styles.unit}>%</span>
             </div>
           </div>
@@ -285,9 +284,7 @@ function Location() {
       const wd = getWindDirection(weatherData.wind.deg);
       setWindDeg(wd);
     }
-    {
-      /* 비가 안오면 weatherData.rain이 없어서 오류남. 삼항연산자로 해결 */
-    }
+    {/* 비가 안오면 weatherData.rain이 없어서 오류남.삼항연산자로 해결 */}
     weatherData.rain
       ? setRain(weatherData.rain["1h"])
       : weatherData.snow
@@ -388,7 +385,7 @@ function Location() {
           <div className={`${styles.box} ${styles.hourlyTemp}`}>
             <div
               //  className={styles.flexBox}
-              className={styles.aa}
+              className={styles.swiperContainer}
             >
               <Swiper
                 slidesPerView={4}

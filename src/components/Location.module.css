@@ -151,10 +151,6 @@ body.fade {
 }
 /* header 끝 */
 /* currentBox */
-.currentBox {
-}
-.currentInfo {
-}
 .city {
   font-size: 24px;
 }
@@ -198,8 +194,7 @@ body.fade {
 
 /* currentBox 끝 */
 /* recommendedBox */
-.recommendedBox {
-}
+
 .cate p {
   font-size: 20px;
 }
@@ -208,27 +203,15 @@ body.fade {
 }
 /* recommendedBox 끝 */
 /* hourlyBox */
-.hourlyTemp {
+
+.dateBox{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 20px;
+    text-decoration: overline;
 }
-/* hourlyBox 끝 */
-/* weeklyBox */
-.flexBox {
-  position: relative;
-  display: flex;
-  width: 90%;
-  justify-content: space-between;
-}
-.weeklyTempItem {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.weeklyTempItem p {
-  font-size: 18px;
-}
-/* weeklyBox 끝 */
-.aa {
+.swiperContainer {
   position: relative;
   display: block;
   width: 90%;
@@ -265,10 +248,24 @@ body.fade {
   height: 15px;
   object-fit: cover;
 }
-.dateBox{
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 20px;
-    text-decoration: overline;
+/* hourlyBox 끝 */
+/* weeklyBox */
+.flexBox {
+  position: relative;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
 }
+.weeklyTempItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.weeklyTempItem p {
+  font-size: 18px;
+}
+/* weeklyBox 끝 */
+
+
+
