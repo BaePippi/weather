@@ -9,10 +9,12 @@ import "swiper/css";
 // import required modules
 
 import styles from "./Location.module.css";
+import Loading from "./Loading.js";
 
 const API_KEY = "502c6236cb77f41edd4be739de30ed18";
 
 export function Location() {
+  const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState("");
 
   const [weatherData, setWeatherData] = useState({});
@@ -23,9 +25,11 @@ export function Location() {
   const [weatherIcon, setWeatherIcon] = useState("");
   const [windDeg, setWindDeg] = useState("");
   const [rain, setRain] = useState(0);
-
-  // 현재 위치 좌표로 변경
-  useEffect(() => {
+//   useEffect(() => {
+// }, []);
+// 현재 위치 좌표로 변경
+useEffect(() => {
+      setLoading(true);
     navigator.geolocation.getCurrentPosition((pos) => {
       setLocation({ lat: pos.coords.latitude, lon: pos.coords.longitude });
     });
@@ -52,9 +56,14 @@ export function Location() {
           appid: API_KEY,
         },
       })
+      .catch((error) => {
+        alert(error);
+      })
       .then((res) => {
         setWeatherData(res.data);
+        setLoading(false);
       });
+
     // 검색된 지역의 주간 날씨 데이터를 가져옴
     axios
       .get("https://api.openweathermap.org/data/2.5/forecast", {
@@ -155,7 +164,7 @@ export function Location() {
               alt="water"
             />
             <div className={styles.rain}>
-              {hourlyWeather[i].pop * 100}
+              {Math.round(hourlyWeather[i].pop * 100)}
               <span className={styles.unit}>%</span>
             </div>
           </div>
@@ -284,7 +293,9 @@ export function Location() {
       const wd = getWindDirection(weatherData.wind.deg);
       setWindDeg(wd);
     }
-    {/* 비가 안오면 weatherData.rain이 없어서 오류남.삼항연산자로 해결 */}
+    {
+      /* 비가 안오면 weatherData.rain이 없어서 오류남.삼항연산자로 해결 */
+    }
     weatherData.rain
       ? setRain(weatherData.rain["1h"])
       : weatherData.snow
@@ -305,6 +316,7 @@ export function Location() {
 
   return (
     <div className={styles.wrap}>
+      {loading ? <Loading /> : null}
       <div className={styles.inner}>
         <header className={styles.header}>
           <h1 className={styles.appName}>오늘의 날씨</h1>

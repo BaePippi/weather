@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const Background = styled.div`
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
-  background: #ffffffb7;
+  background: #ffffff;
   z-index: 999;
   display: flex;
   flex-direction: column;
@@ -15,6 +15,6 @@ export const Background = styled.div`
 `;
 
 export const LoadingText = styled.div`
-  font: 1rem "Noto Sans KR";
+  font: 35px "GangwonEdu_OTFBoldA";
   text-align: center;
 `;
