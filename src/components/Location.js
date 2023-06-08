@@ -157,12 +157,12 @@ useEffect(() => {
             <span className={styles.unit}>°C</span>
           </p>
           <div className={styles.popBox}>
-            {/* <img className={styles.water} src="images/water.png" alt="water" /> */}
-            <img
+            <img className={styles.water} src="images/water.png" alt="water" />
+            {/* <img
               className={styles.water}
               src="http://localhost:3000/weather/images/water.png"
               alt="water"
-            />
+            /> */}
             <div className={styles.rain}>
               {Math.round(hourlyWeather[i].pop * 100)}
               <span className={styles.unit}>%</span>
