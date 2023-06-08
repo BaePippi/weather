@@ -12,7 +12,7 @@ import styles from "./Location.module.css";
 
 const API_KEY = "502c6236cb77f41edd4be739de30ed18";
 
-function Location() {
+export function Location() {
   const [location, setLocation] = useState("");
 
   const [weatherData, setWeatherData] = useState({});
