@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
+import icons from "../css/weather-icons.css";
 
 // Import Swiper styles
 import "swiper/css";
@@ -61,7 +62,7 @@ useEffect(() => {
       })
       .then((res) => {
         setWeatherData(res.data);
-        setLoading(false);
+        // setLoading(false);
       });
 
     // 검색된 지역의 주간 날씨 데이터를 가져옴
@@ -74,6 +75,9 @@ useEffect(() => {
           units: "metric",
           appid: API_KEY,
         },
+      })
+      .catch((error) => {
+        alert(error);
       })
       .then((res) => {
         let hourly = [];
@@ -113,6 +117,7 @@ useEffect(() => {
             }
           }
         }
+        setLoading(false);
       });
   }, [location]);
   console.log(hourlyWeather);
@@ -121,7 +126,8 @@ useEffect(() => {
     const result = [];
 
     for (let i = 0; i < hourlyWeather.length; i++) {
-      const iconCode = hourlyWeather[i].weather[0].icon;
+      const iconCode = hourlyWeather[i].weather[0].id;
+      // setWeatherIcon(`wi-owm-${iconCode}`);
       result.push(
         <SwiperSlide key={hourlyWeather[i].dt_txt}>
           {/* 원래 이렇게 하려고 했으나 날짜 넘어가는 부분에서 시차 9시간때문에 6시 위에 날짜가 표시됨. */}
@@ -147,9 +153,9 @@ useEffect(() => {
               : new Date(hourlyWeather[i].dt_txt).getHours() - 15}
             시
           </p>
-          <img
-            className={styles.hourlyIcon}
-            src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
+          <div
+            className={`${styles.hourlyIcon} ${'wi'} ${`wi-owm-${iconCode}`}`}
+            // src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
             alt={hourlyWeather[i].weather[0].description}
           />
           <p key={hourlyWeather[i].dt_txt + "temp"}>
@@ -251,8 +257,10 @@ useEffect(() => {
     }
     // 날씨 아이콘
     if (weatherData.weather) {
-      const iconCode = weatherData.weather[0].icon;
-      setWeatherIcon(`https://openweathermap.org/img/wn/${iconCode}@2x.png`);
+      // const iconCode = weatherData.weather[0].icon;
+      // setWeatherIcon(`https://openweathermap.org/img/wn/${iconCode}@2x.png`);
+      const iconCode = weatherData.weather[0].id;
+      setWeatherIcon(`wi-owm-${iconCode}`);
     }
     // 풍향(다 만들고 공부할 것)
     const WindType = {
@@ -343,8 +351,14 @@ useEffect(() => {
               {/*아이콘*/}
               <div
                 className={styles.tempBox}
-                style={{ background: `url('${weatherIcon}') no-repeat center` }}
+                // style={{ background: `url('${weatherIcon}') no-repeat center` }}
               >
+                <div
+                  className={`${'wi'} ${weatherIcon} ${styles.tempBoxIcon}`}
+                  // style={{
+                  //   background: `url('${weatherIcon}') no-repeat center`,
+                  // }}
+                ></div>
                 <p className={styles.currentTemp}>
                   {Math.round(weatherData.main.temp)}
                 </p>
