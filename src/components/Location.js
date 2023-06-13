@@ -120,7 +120,6 @@ useEffect(() => {
         setLoading(false);
       });
   }, [location]);
-  console.log(hourlyWeather);
 
   const hourly = () => {
     const result = [];
