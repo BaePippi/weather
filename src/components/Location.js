@@ -26,11 +26,11 @@ export function Location() {
   const [weatherIcon, setWeatherIcon] = useState("");
   const [windDeg, setWindDeg] = useState("");
   const [rain, setRain] = useState(0);
-//   useEffect(() => {
-// }, []);
-// 현재 위치 좌표로 변경
-useEffect(() => {
-      setLoading(true);
+  //   useEffect(() => {
+  // }, []);
+  // 현재 위치 좌표로 변경
+  useEffect(() => {
+    setLoading(true);
     navigator.geolocation.getCurrentPosition((pos) => {
       setLocation({ lat: pos.coords.latitude, lon: pos.coords.longitude });
     });
@@ -136,41 +136,71 @@ useEffect(() => {
             <p>{new Date(hourlyWeather[i].dt_txt).getDate()}일</p>
           )} */}
           {/* 젤 첨에는 오늘 표시하고 날짜바뀌고 3시에만 날짜 표시함 */}
-          <div className={styles.dateBox}>
-            {i === 0 ? (
-              <p>오늘</p>
-            ) : (
-              new Date(hourlyWeather[i].dt_txt).getHours() + 9 > 24 &&
-              new Date(hourlyWeather[i].dt_txt).getHours() - 15 === 3 && (
-                <p>{new Date(hourlyWeather[i].dt_txt).getDate()}일</p>
-              )
-            )}
-          </div>
-          <p key={hourlyWeather[i].dt_txt + "hour"}>
-            {new Date(hourlyWeather[i].dt_txt).getHours() + 9 < 25
-              ? new Date(hourlyWeather[i].dt_txt).getHours() + 9
-              : new Date(hourlyWeather[i].dt_txt).getHours() - 15}
-            시
-          </p>
           <div
-            className={`${styles.hourlyIcon} ${'wi'} ${`wi-owm-${iconCode}`}`}
-            // src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
-            alt={hourlyWeather[i].weather[0].description}
-          />
-          <p key={hourlyWeather[i].dt_txt + "temp"}>
-            {Math.round(hourlyWeather[i].main.temp)}
-            <span className={styles.unit}>°C</span>
-          </p>
-          <div className={styles.popBox}>
-            <img className={styles.water} src="images/water.png" alt="water" />
-            {/* <img
+            className="swiperInner"
+            style={{
+              height: "150px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <div className={styles.dateBox}>
+              {i === 0 ? (
+                <span
+                  style={{
+                    fontSize: "16px",
+                    background:
+                      "linear-gradient(to top, #ff897250 50%, transparent 50%)",
+                  }}
+                >
+                  오늘
+                </span>
+              ) : (
+                new Date(hourlyWeather[i].dt_txt).getHours() + 9 > 24 &&
+                new Date(hourlyWeather[i].dt_txt).getHours() - 15 === 3 && (
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      background:
+                        "linear-gradient(to top, #ff897250 50%, transparent 50%)",
+                    }}
+                  >
+                    {new Date(hourlyWeather[i].dt_txt).getDate()}일
+                  </span>
+                )
+              )}
+            </div>
+            <p key={hourlyWeather[i].dt_txt + "hour"}>
+              {new Date(hourlyWeather[i].dt_txt).getHours() + 9 < 25
+                ? new Date(hourlyWeather[i].dt_txt).getHours() + 9
+                : new Date(hourlyWeather[i].dt_txt).getHours() - 15}
+              시
+            </p>
+            <div
+              className={`${styles.hourlyIcon} ${"wi"} ${`wi-owm-${iconCode}`}`}
+              // src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
+              alt={hourlyWeather[i].weather[0].description}
+            />
+            <p key={hourlyWeather[i].dt_txt + "temp"}>
+              {Math.round(hourlyWeather[i].main.temp)}
+              <span className={styles.unit}>°C</span>
+            </p>
+            <div className={styles.popBox}>
+              <img
+                className={styles.water}
+                src="images/water.png"
+                alt="water"
+              />
+              {/* <img
               className={styles.water}
               src="http://localhost:3000/weather/images/water.png"
               alt="water"
             /> */}
-            <div className={styles.rain}>
-              {Math.round(hourlyWeather[i].pop * 100)}
-              <span className={styles.unit}>%</span>
+              <div className={styles.rain}>
+                {Math.round(hourlyWeather[i].pop * 100)}
+                <span className={styles.unit}>%</span>
+              </div>
             </div>
           </div>
         </SwiperSlide>
@@ -197,7 +227,16 @@ useEffect(() => {
             className={styles.weeklyTempItem}
             key={weeklyWeather[z * 8].dt_txt}
           >
-            <p key={"maxTemp" + z}>{date.getDate()}일</p>
+            <p
+              style={{
+                fontSize: "16px",
+                background:
+                  "linear-gradient(to top, #ff897250 50%, transparent 50%)",
+              }}
+              key={"maxTemp" + z}
+            >
+              {date.getDate()}일
+            </p>
             <p>
               {Math.round(Math.min(...arr[z])) +
                 "/" +
@@ -353,7 +392,7 @@ useEffect(() => {
                 // style={{ background: `url('${weatherIcon}') no-repeat center` }}
               >
                 <div
-                  className={`${'wi'} ${weatherIcon} ${styles.tempBoxIcon}`}
+                  className={`${"wi"} ${weatherIcon} ${styles.tempBoxIcon}`}
                   // style={{
                   //   background: `url('${weatherIcon}') no-repeat center`,
                   // }}
@@ -407,12 +446,13 @@ useEffect(() => {
           <div className={styles.cate}>
             <p>시간별기온</p>
           </div>
-          <div className={`${styles.box} ${styles.hourlyTemp}`}>
+          <div className={`${styles.box}`}>
             <div
               //  className={styles.flexBox}
               className={styles.swiperContainer}
             >
               <Swiper
+                // style={{height:"150px"}}
                 slidesPerView={4}
                 // spaceBetween={30}
                 pagination={{

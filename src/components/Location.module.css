@@ -216,8 +216,8 @@ body.fade {
     display: block;
     width: 100%;
     height: 20px;
-    text-decoration: overline;
 }
+
 .swiperContainer {
   position: relative;
   display: block;
@@ -229,11 +229,12 @@ body.fade {
   width: 100%;
   height: 100%;
 }
-
-
+.swiperInner{
+  display: flex;
+  height: 120px;
+}
 .swiper-slide img {
   display: block;
-  
   object-fit: cover;
 }
 .hourlyIcon {
@@ -242,7 +243,7 @@ body.fade {
   /* background-size: contain !important;
   object-fit: cover; */
   font-size: 25px;
-  margin: auto;
+  margin: 0 auto;
 }
 .popBox {
   position: relative;
@@ -270,6 +271,8 @@ body.fade {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  height: 50px;
 }
 .weeklyTempItem p {
   font-size: 18px;
