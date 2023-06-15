@@ -11,6 +11,7 @@ import "swiper/css";
 
 import styles from "./Location.module.css";
 import Loading from "./Loading.js";
+import { string } from "prop-types";
 
 const API_KEY = "502c6236cb77f41edd4be739de30ed18";
 
@@ -349,14 +350,17 @@ export function Location() {
       : setRain(0);
   }, [weatherData]);
   // 검색하면 실행
-  const fetchWeatherData = async (location) => {
+  const fetchWeatherData = async (location, input) => {
+    if (!input) {
+      return alert("도시를 입력해주세요");
+    }
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&lang=kr&units=metric`;
     const response = await axios.get(url);
     setWeatherData(response.data);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchWeatherData(location);
+    fetchWeatherData(location, input);
     setInput("");
   };
 
@@ -369,7 +373,7 @@ export function Location() {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Enter location"
+              placeholder="도시를 검색해보세요"
               value={input}
               onChange={(e) => {
                 setLocation(e.target.value);
