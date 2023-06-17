@@ -27,11 +27,11 @@ export function Location() {
   const [weatherIcon, setWeatherIcon] = useState("");
   const [windDeg, setWindDeg] = useState("");
   const [rain, setRain] = useState(0);
-  //   useEffect(() => {
-  // }, []);
+  let lat = "";
+  let lon = "";
   // 현재 위치 좌표로 변경
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     navigator.geolocation.getCurrentPosition((pos) => {
       setLocation({ lat: pos.coords.latitude, lon: pos.coords.longitude });
     });
@@ -40,14 +40,15 @@ export function Location() {
   useEffect(() => {
     // >> location 바뀌면 실행
     if (!location.lat) {
-      // 검색 전이면 리턴
+      // 검색했으면 리턴
       return;
     }
-    // 검색한 지역의 좌표로 변경
-    const lat = location.lat;
-    const lon = location.lon;
+    // 현재 지역의 좌표로 변경
+    lat = location.lat;
+    lon = location.lon;
+    console.log(lat);
 
-    // 검색된 지역의 날씨 json 가져오기
+    // 현재 지역의 날씨 json 가져오기
     axios
       .get("https://api.openweathermap.org/data/2.5/weather", {
         params: {
@@ -63,11 +64,30 @@ export function Location() {
       })
       .then((res) => {
         setWeatherData(res.data);
-        // setLoading(false);
+        fiveDaysFore(lat, lon);
       });
+  }, [location]);
+  // useEffect(() => {
+  // alert("aa")
+
+  // if(weatherData===null){
+  //   return;
+
+  // }lat = location.lat;
+  //   lon = location.lon;
+  //   fiveDaysFore(lat, lon);
+  // }, []);
+  const fiveDaysFore = async (lat, lon) => {
+    // lat = location.lat;
+    //    lon = location.lon;
+    // if (!location.lat) {
+    //   lat = weatherData.coord.lat;
+    //   lon = weatherData.coord.lon;
+    //   console.log(lat);
+    // }
 
     // 검색된 지역의 주간 날씨 데이터를 가져옴
-    axios
+    await axios
       .get("https://api.openweathermap.org/data/2.5/forecast", {
         params: {
           lat: lat,
@@ -83,7 +103,7 @@ export function Location() {
       .then((res) => {
         let hourly = [];
         let weekly = [];
-
+        console.log(res.data);
         for (let i = 0; i < res.data.list.length; i++) {
           let day = new Date(res.data.list[i].dt_txt).getDate();
           let time = new Date(res.data.list[i].dt_txt).getHours();
@@ -120,8 +140,7 @@ export function Location() {
         }
         setLoading(false);
       });
-  }, [location]);
-
+  };
   const hourly = () => {
     const result = [];
 
@@ -271,6 +290,19 @@ export function Location() {
     return result;
   };
   useEffect(() => {
+    setLoading(true);
+    if (location.lat) {
+      // 검색전이면 리턴
+      return;
+    }else if(weatherData.coord){
+      lat = weatherData.coord.lat;
+    lon = weatherData.coord.lon;
+    console.log(lat);
+    fiveDaysFore(lat, lon)
+    }
+    
+  },[weatherData]);
+  useEffect(() => {
     // >>weatherData 바뀌면 실행
     // 기온별 옷차림 추천 분기문
     if (weatherData.main) {
@@ -349,15 +381,21 @@ export function Location() {
       ? setRain(weatherData.snow["1h"])
       : setRain(0);
   }, [weatherData]);
+
   // 검색하면 실행
   const fetchWeatherData = async (location, input) => {
     if (!input) {
       return alert("도시를 입력해주세요");
     }
+    // fiveDaysFore();
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&lang=kr&units=metric`;
     const response = await axios.get(url);
     setWeatherData(response.data);
+    // lat = weatherData.coord.lat;
+    // lon = weatherData.coord.lon;
+    // fiveDaysFore(lat, lon);
   };
+  console.log(weatherData);
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWeatherData(location, input);

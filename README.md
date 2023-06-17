@@ -25,9 +25,10 @@ https://baepippi.github.io/weather
 
 ## 구현 기능
 
-### 1 
+### 1 Geolocation API를 이용해 현재 위치의 좌표를 가져와 openWeatherMap API를 이용해 axios 통신하여 현재 위치의 날씨데이터를 가져옴.
 
-### 2 
+
+### 2 검색창에 입력을 하면 입력값을 setLocation하고 openWeatherMap API를  이용해 axios로 날씨데이터 가져옴. 만약 빈칸을 검색한다면 alert를 띄움.
 
 ### 3 
 
