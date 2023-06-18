@@ -30,8 +30,7 @@ https://baepippi.github.io/weather
 
 ### 2 검색창에 입력을 하면 입력값을 setLocation하고 openWeatherMap API를  이용해 axios로 날씨데이터 가져옴. 만약 빈칸이나 없는 도시명을 검색한다면 alert를 띄움.
 
-### 3 
-
+### 3 시간별날씨를 swiper.js를 활용해 스크롤 가능하도록 함.
 ### 4 
 
 ### 5 

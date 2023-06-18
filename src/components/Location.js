@@ -5,10 +5,11 @@ import icons from "../css/weather-icons.css";
 
 // Import Swiper styles
 import "swiper/css";
+import "swiper/css/navigation";
 // import "swiper/css/pagination";
 
 // import required modules
-
+import { Navigation } from "swiper";
 import styles from "./Location.module.css";
 import Loading from "./Loading.js";
 import { string } from "prop-types";
@@ -388,11 +389,14 @@ export function Location() {
     }
     // fiveDaysFore();
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&lang=kr&units=metric`;
-    await axios.get(url)
-    .then((res)=>{setWeatherData(res.data)})
-    .catch((error)=>{
-      return alert("도시를 입력해주세요");
-    })
+    await axios
+      .get(url)
+      .then((res) => {
+        setWeatherData(res.data);
+      })
+      .catch((error) => {
+        return alert("도시를 입력해주세요");
+      });
     // const response = await axios.get(url).catch((error) => {
     //   return alert("도시를 입력해주세요");
     // });
@@ -500,12 +504,19 @@ export function Location() {
               className={styles.swiperContainer}
             >
               <Swiper
-                // style={{height:"150px"}}
+                style={{
+                  "--swiper-navigation-size": "25px",
+                  "--swiper-navigation-top-offset": "50%",
+                  "--swiper-navigation-sides-offset": "5px",
+                  "--swiper-navigation-color": "#f45050",
+                }}
+                navigation={true}
                 slidesPerView={4}
                 // spaceBetween={30}
-                pagination={{
-                  clickable: true,
-                }}
+                modules={[Navigation]}
+                // pagination={{
+                //   clickable: true,
+                // }}
                 className="mySwiper"
               >
                 {hourly()}
