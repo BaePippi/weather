@@ -294,14 +294,13 @@ export function Location() {
     if (location.lat) {
       // 검색전이면 리턴
       return;
-    }else if(weatherData.coord){
+    } else if (weatherData.coord) {
       lat = weatherData.coord.lat;
-    lon = weatherData.coord.lon;
-    console.log(lat);
-    fiveDaysFore(lat, lon)
+      lon = weatherData.coord.lon;
+      console.log(lat);
+      fiveDaysFore(lat, lon);
     }
-    
-  },[weatherData]);
+  }, [weatherData]);
   useEffect(() => {
     // >>weatherData 바뀌면 실행
     // 기온별 옷차림 추천 분기문
@@ -389,8 +388,15 @@ export function Location() {
     }
     // fiveDaysFore();
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&lang=kr&units=metric`;
-    const response = await axios.get(url);
-    setWeatherData(response.data);
+    await axios.get(url)
+    .then((res)=>{setWeatherData(res.data)})
+    .catch((error)=>{
+      return alert("도시를 입력해주세요");
+    })
+    // const response = await axios.get(url).catch((error) => {
+    //   return alert("도시를 입력해주세요");
+    // });
+    // setWeatherData(response.data);
     // lat = weatherData.coord.lat;
     // lon = weatherData.coord.lon;
     // fiveDaysFore(lat, lon);
