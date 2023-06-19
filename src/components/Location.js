@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
-import icons from "../css/weather-icons.css";
+import "../css/weather-icons.css";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-// import "swiper/css/pagination";
 
-// import required modules
 import { Navigation } from "swiper";
 import styles from "./Location.module.css";
 import Loading from "./Loading.js";
-import { string } from "prop-types";
 
 const API_KEY = "502c6236cb77f41edd4be739de30ed18";
 
@@ -30,9 +26,9 @@ export function Location() {
   const [rain, setRain] = useState(0);
   let lat = "";
   let lon = "";
+
   // 현재 위치 좌표로 변경
   useEffect(() => {
-    // setLoading(true);
     navigator.geolocation.getCurrentPosition((pos) => {
       setLocation({ lat: pos.coords.latitude, lon: pos.coords.longitude });
     });
@@ -47,7 +43,6 @@ export function Location() {
     // 현재 지역의 좌표로 변경
     lat = location.lat;
     lon = location.lon;
-    console.log(lat);
 
     // 현재 지역의 날씨 json 가져오기
     axios
@@ -68,25 +63,8 @@ export function Location() {
         fiveDaysFore(lat, lon);
       });
   }, [location]);
-  // useEffect(() => {
-  // alert("aa")
-
-  // if(weatherData===null){
-  //   return;
-
-  // }lat = location.lat;
-  //   lon = location.lon;
-  //   fiveDaysFore(lat, lon);
-  // }, []);
+  
   const fiveDaysFore = async (lat, lon) => {
-    // lat = location.lat;
-    //    lon = location.lon;
-    // if (!location.lat) {
-    //   lat = weatherData.coord.lat;
-    //   lon = weatherData.coord.lon;
-    //   console.log(lat);
-    // }
-
     // 검색된 지역의 주간 날씨 데이터를 가져옴
     await axios
       .get("https://api.openweathermap.org/data/2.5/forecast", {
@@ -104,27 +82,10 @@ export function Location() {
       .then((res) => {
         let hourly = [];
         let weekly = [];
-        console.log(res.data);
         for (let i = 0; i < res.data.list.length; i++) {
           let day = new Date(res.data.list[i].dt_txt).getDate();
           let time = new Date(res.data.list[i].dt_txt).getHours();
-          // 오늘날짜와 일치하면 hourlyWeather 변경
           //time에 9를 더한 이유 : utc기준 시간이라 우리나라가 9시간 더 빠르다.
-
-          //   if (day === new Date().getDate()) {
-          //     if (time + 9 < 25) {
-          //       hourly.push(res.data.list[i]);
-          //       setHourlyWeather(hourly);
-          //     } else {
-          //       weekly.push(res.data.list[i]);
-          //       setWeeklyWeather(weekly);
-          //     }
-          //   }
-          //   //오늘날짜도 어제 날짜도 아니면 weeklyWeather 변경
-          //   else if (day !== new Date().getDate() - 1) {
-          //     weekly.push(res.data.list[i]);
-          //     setWeeklyWeather(weekly);
-          //   }
           hourly.push(res.data.list[i]);
           setHourlyWeather(hourly);
 
@@ -147,7 +108,6 @@ export function Location() {
 
     for (let i = 0; i < hourlyWeather.length; i++) {
       const iconCode = hourlyWeather[i].weather[0].id;
-      // setWeatherIcon(`wi-owm-${iconCode}`);
       result.push(
         <SwiperSlide key={hourlyWeather[i].dt_txt}>
           {/* 원래 이렇게 하려고 했으나 날짜 넘어가는 부분에서 시차 9시간때문에 6시 위에 날짜가 표시됨. */}
@@ -200,7 +160,6 @@ export function Location() {
             </p>
             <div
               className={`${styles.hourlyIcon} ${"wi"} ${`wi-owm-${iconCode}`}`}
-              // src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
               alt={hourlyWeather[i].weather[0].description}
             />
             <p key={hourlyWeather[i].dt_txt + "temp"}>
@@ -213,11 +172,6 @@ export function Location() {
                 src="images/water.png"
                 alt="water"
               />
-              {/* <img
-              className={styles.water}
-              src="http://localhost:3000/weather/images/water.png"
-              alt="water"
-            /> */}
               <div className={styles.rain}>
                 {Math.round(hourlyWeather[i].pop * 100)}
                 <span className={styles.unit}>%</span>
@@ -268,26 +222,6 @@ export function Location() {
         );
       }
     }
-    // for (let i = 0; i < weeklyWeather.length; i++) {
-    //   arr.push(weeklyWeather[i].main.temp);
-    //   result.push(
-    //     <div key={weeklyWeather[i].dt_txt}>
-    //       <p key={weeklyWeather[i].dt_txt + "hour"}>
-    //         {new Date(weeklyWeather[i].dt_txt).getHours() + 9 < 25
-    //           ? new Date(weeklyWeather[i].dt_txt).getHours() + 9
-    //           : new Date(weeklyWeather[i].dt_txt).getHours() - 15}
-    //         시
-    //       </p>
-    //       {/* 주간날씨 날짜별 최고 최저로 수정해야 함 */}
-    //       <p key={weeklyWeather[i].dt_txt + "temp"}>
-    //         {Math.round(weeklyWeather[i].main.temp)}°C
-    //       </p>
-    //       <p key={weeklyWeather[i].dt_txt + "description"}>
-    //         {weeklyWeather[i].weather[0].description}
-    //       </p>
-    //     </div>
-    //   );
-    // }
     return result;
   };
   useEffect(() => {
@@ -298,7 +232,6 @@ export function Location() {
     } else if (weatherData.coord) {
       lat = weatherData.coord.lat;
       lon = weatherData.coord.lon;
-      console.log(lat);
       fiveDaysFore(lat, lon);
     }
   }, [weatherData]);
@@ -328,12 +261,10 @@ export function Location() {
     }
     // 날씨 아이콘
     if (weatherData.weather) {
-      // const iconCode = weatherData.weather[0].icon;
-      // setWeatherIcon(`https://openweathermap.org/img/wn/${iconCode}@2x.png`);
       const iconCode = weatherData.weather[0].id;
       setWeatherIcon(`wi-owm-${iconCode}`);
     }
-    // 풍향(다 만들고 공부할 것)
+    // 풍향
     const WindType = {
       N0: [0, "북"],
       NNE: [1, "북북동"],
@@ -354,7 +285,7 @@ export function Location() {
       N16: [16, "북"],
 
       value: function (value) {
-        for (const type in this) {
+        for (const type in this) {//for...in 루프 사용하여 일치하는 풍향값을 리턴함
           if (this[type][0] === value) {
             return this[type];
           }
@@ -364,7 +295,7 @@ export function Location() {
     };
 
     function getWindDirection(degree) {
-      const result = Math.floor((degree + 22.5 * 0.5) / 22.5);
+      const result = Math.floor((degree + 22.5 * 0.5) / 22.5);// 풍향 값을 계산하는 식
       const windType = WindType.value(result);
       return windType[1];
     }
@@ -387,7 +318,6 @@ export function Location() {
     if (!input) {
       return alert("도시를 입력해주세요");
     }
-    // fiveDaysFore();
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&lang=kr&units=metric`;
     await axios
       .get(url)
@@ -397,15 +327,8 @@ export function Location() {
       .catch((error) => {
         return alert("도시를 입력해주세요");
       });
-    // const response = await axios.get(url).catch((error) => {
-    //   return alert("도시를 입력해주세요");
-    // });
-    // setWeatherData(response.data);
-    // lat = weatherData.coord.lat;
-    // lon = weatherData.coord.lon;
-    // fiveDaysFore(lat, lon);
+    
   };
-  console.log(weatherData);
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWeatherData(location, input);
@@ -441,13 +364,9 @@ export function Location() {
               {/*아이콘*/}
               <div
                 className={styles.tempBox}
-                // style={{ background: `url('${weatherIcon}') no-repeat center` }}
               >
                 <div
                   className={`${"wi"} ${weatherIcon} ${styles.tempBoxIcon}`}
-                  // style={{
-                  //   background: `url('${weatherIcon}') no-repeat center`,
-                  // }}
                 ></div>
                 <p className={styles.currentTemp}>
                   {Math.round(weatherData.main.temp)}
@@ -500,7 +419,6 @@ export function Location() {
           </div>
           <div className={`${styles.box}`}>
             <div
-              //  className={styles.flexBox}
               className={styles.swiperContainer}
             >
               <Swiper
@@ -514,9 +432,7 @@ export function Location() {
                 slidesPerView={4}
                 // spaceBetween={30}
                 modules={[Navigation]}
-                // pagination={{
-                //   clickable: true,
-                // }}
+                
                 className="mySwiper"
               >
                 {hourly()}
